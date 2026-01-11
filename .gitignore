@@ -76,3 +76,11 @@ Gopkg.lock
 *.rvmrc
 *.ruby-version
 *.ruby-gemset
+
+Pipfile
+_legacy/
+_site/
+
+# Markdown final content
+src/content/quotes/*.md
+

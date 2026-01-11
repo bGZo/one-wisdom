@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const allQuotes = await getCollection('quotes');
+  return allQuotes.map(quote => ({
+    params: { slug: quote.slug },
+    props: { quote },
+  }));
+}
+
+const { quote } = Astro.props;
+const { Content } = await quote.render();
+---
+
+<Layout title={`${quote.data.title} | One`}>
+  <main id="article">
+    <div class="sentence">
+        {quote.data.title}
+    </div>
+    <cite>
+      <div class="author">{quote.data.author}</div>
+      <div class="source">{quote.data.source}</div> 
+      <a class="more" href="/">Back to Home</a>
+    </cite>
+    
+    <div class="content" style="display:none">
+       <!-- SEO Content if any -->
+       <Content />
+    </div>
+  </main>
+</Layout>
+
+<style>
+main {
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+}
+.sentence {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+.author, .source {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+.more {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: #aaa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+</style>
