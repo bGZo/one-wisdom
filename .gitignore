@@ -81,6 +81,12 @@ Pipfile
 _legacy/
 _site/
 
+# Astro build cache
+.astro/
+
+# 最小索引
+public/api/index-min.json
+
 # Markdown final content
 src/content/quotes/*.md
 

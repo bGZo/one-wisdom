@@ -3,8 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { glob } from 'glob';
 
-const SOURCE_A_DIR = 'data/source_a'; // Upstream (Git ignored usually)
-const SOURCE_B_DIR = 'data/source_b'; // Local fixed
+const SOURCE_A_DIR = 'data/manual'; // Upstream (Git ignored usually)
+const SOURCE_B_DIR = 'data/weread'; // Local fixed
 const OUTPUT_DIR = 'src/content/quotes';
 const MANIFEST_FILE = 'public/api/index-min.json';
 
@@ -48,14 +48,12 @@ async function sync() {
       const destPath = path.join(OUTPUT_DIR, `${slug}.md`);
       
       // We write the file to src/content/quotes so Astro Content Collections can pick it up
-      // We can preserve the original frontmatter and content
-      await fs.copy(srcPath, destPath);
-      // // We avoid 'layout' key to prevent Astro trying to resolve it as a component
-      // const data = { ...parsed.data };
-      // delete data.layout;
+      // We avoid 'layout' key to prevent Astro trying to resolve it as a component
+      const data = { ...parsed.data };
+      delete data.layout;
       
-      // const newContent = matter.stringify(parsed.content, data);
-      // await fs.writeFile(destPath, newContent);
+      const newContent = matter.stringify(parsed.content, data);
+      await fs.writeFile(destPath, newContent);
 
       // Add to Manifest
       quotes.push({
