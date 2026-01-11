@@ -12,17 +12,28 @@ export async function getStaticPaths() {
 
 const { quote } = Astro.props;
 const { Content } = await quote.render();
+
+const len = quote.data.title.length;
+let fontSize = '2rem';
+if (len < 10) fontSize = '3rem';
+else if (len < 30) fontSize = '2.5rem';
+else if (len < 50) fontSize = '2rem';
+else fontSize = '1.5rem';
 ---
 
 <Layout title={`${quote.data.title} | One`}>
   <main id="article">
-    <div class="sentence">
-        {quote.data.title}
+    <div class="sentence-wrapper">
+        <div class="quotemark left">“</div>
+        <div class="sentence" style={`font-size: ${fontSize}`}>
+            {quote.data.title}
+        </div>
+        <div class="quotemark right">”</div>
     </div>
     <cite>
       <div class="author">{quote.data.author}</div>
       <div class="source">{quote.data.source}</div> 
-      <a class="more" href="/">Back to Home</a>
+      <a class="more" href="/">Back</a>
     </cite>
     
     <div class="content" style="display:none">
@@ -34,28 +45,78 @@ const { Content } = await quote.render();
 
 <style>
 main {
-  text-align: center;
   padding: 2rem;
   max-width: 800px;
+  width: 100%;
 }
+
+.sentence-wrapper {
+  position: relative;
+  margin-bottom: 3rem;
+  padding: 0 2rem;
+}
+
+.quotemark {
+  position: absolute;
+  font-family: serif;
+  font-size: 6rem;
+  color: var(--text-color);
+  opacity: 0.1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.quotemark.left {
+  top: -2rem;
+  left: -1rem;
+}
+
+.quotemark.right {
+  bottom: -3rem;
+  right: -1rem;
+}
+
 .sentence {
-  font-size: 2rem;
+  text-align: left;
   font-weight: bold;
-  margin-bottom: 2rem;
-  line-height: 1.4;
+  line-height: 1.5;
+  color: var(--text-color);
 }
-.author, .source {
+
+cite {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 2rem;
+  font-style: normal;
+}
+
+.author {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.source {
   font-size: 1rem;
-  color: #888;
-  margin-bottom: 0.5rem;
+  color: var(--meta-color);
+  margin-bottom: 1.5rem;
 }
+
 .more {
   display: inline-block;
-  margin-top: 2rem;
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
-  color: #aaa;
-  border: 1px solid #ddd;
+  color: var(--meta-color);
+  border: 1px solid var(--meta-color);
   border-radius: 4px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.more:hover {
+  background: var(--text-color);
+  color: var(--bg-color);
+  border-color: var(--text-color);
 }
 </style>
