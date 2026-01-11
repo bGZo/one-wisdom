@@ -1,20 +1,30 @@
 <template>
   <div class="container" @click="shuffle">
-    <main id="article" v-if="currentQuote">
-      <div class="sentence-wrapper">
-        <div class="quotemark left">“</div>
-        <div class="sentence" :style="{ fontSize: fontSize }">
-          <a :href="currentQuote.path" @click.stop>{{ currentQuote.title }}</a>
+    <div class="content">
+      <main id="article" v-if="currentQuote">
+        <div class="sentence-wrapper">
+          <div class="quotemark left">“</div>
+          <div class="sentence" :style="{ fontSize: fontSize }">
+            <a :href="currentQuote.path" @click.stop>{{ currentQuote.title }}</a>
+          </div>
+          <div class="quotemark right">”</div>
         </div>
-        <div class="quotemark right">”</div>
+        <cite>
+          <div class="author">{{ currentQuote.author }}</div>
+          <div class="source">{{ currentQuote.source }}</div>
+        </cite>
+      </main>
+      <div v-else class="loading">Loading...</div>
+    </div>
+    
+    <footer>
+      <div class="footer-left">
+        <span>Star me on <a href="https://github.com/bGZo/one-wisdom" target="_blank" @click.stop>Github</a></span>
       </div>
-      <cite>
-        <div class="author">{{ currentQuote.author }}</div>
-        <div class="source">{{ currentQuote.source }}</div>
-        <a class="more" href="#" @click.prevent.stop="shuffle">Next</a>
-      </cite>
-    </main>
-    <div v-else class="loading">Loading...</div>
+      <div class="footer-right">
+         <a class="more" href="#" @click.prevent.stop="shuffle">Next</a>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -71,6 +81,18 @@ onMounted(() => {
   cursor: pointer;
   user-select: none;
   width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 600px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sentence-wrapper {
@@ -134,6 +156,33 @@ cite {
   margin-bottom: 1.5rem;
 }
 
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 2rem;
+}
+
+.footer-left {
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.9rem;
+  color: var(--meta-color);
+}
+
+footer:hover .footer-left {
+  opacity: 1;
+}
+
+.footer-left a {
+    color: var(--meta-color);
+    text-decoration: none;
+}
+
+.footer-left a:hover {
+    text-decoration: underline;
+}
+
 .more {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -142,6 +191,7 @@ cite {
   border: 1px solid var(--meta-color);
   border-radius: 4px;
   transition: all 0.2s;
+  text-decoration: none;
 }
 .more:hover {
   background: var(--text-color);
@@ -152,5 +202,7 @@ cite {
 .loading {
   text-align: center;
   color: var(--meta-color);
+  margin-top: auto;
+  margin-bottom: auto;
 }
 </style>

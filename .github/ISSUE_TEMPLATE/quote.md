@@ -6,7 +6,6 @@ labels: ["Quote"]
 assignees: ''
 ---
 
-layout: post
 title: 
 author: 
 source: 
