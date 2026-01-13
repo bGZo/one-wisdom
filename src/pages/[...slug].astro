@@ -22,32 +22,64 @@ else fontSize = '1.5rem';
 ---
 
 <Layout title={`${quote.data.title} | One`}>
-  <main id="article">
-    <div class="sentence-wrapper">
-        <div class="quotemark left">“</div>
-        <div class="sentence" style={`font-size: ${fontSize}`}>
-            {quote.data.title}
+  <div class="container">
+    <div class="content">
+      <main id="article">
+        <div class="sentence-wrapper">
+            <div class="quotemark left">“</div>
+            <div class="sentence" style={`font-size: ${fontSize}`}>
+                {quote.data.title}
+            </div>
+            <div class="quotemark right">”</div>
         </div>
-        <div class="quotemark right">”</div>
+        <cite>
+          <div class="author">{quote.data.author}</div>
+          <div class="source">
+            {quote.data.note ? (
+              <a href={quote.data.note} target="_blank" class="external-link">{quote.data.source}</a>
+            ) : (
+               quote.data.source
+            )}
+          </div> 
+        </cite>
+        
+        <div class="seo-content" style="display:none">
+           <!-- SEO Content if any -->
+           <Content />
+        </div>
+      </main>
     </div>
-    <cite>
-      <div class="author">{quote.data.author}</div>
-      <div class="source">{quote.data.source}</div> 
-      <a class="more" href="/">Back</a>
-    </cite>
-    
-    <div class="content" style="display:none">
-       <!-- SEO Content if any -->
-       <Content />
-    </div>
-  </main>
+
+    <footer>
+      <div class="footer-left">
+        <span>© 2026 <a href="https://bgzo.cc" target="_blank">bGZo</a> · <a href="https://github.com/bGZo/one-wisdom" target="_blank">One Wisdom</a></span>
+      </div>
+      <div class="footer-right">
+         <a class="more" href="/">Back</a>
+      </div>
+    </footer>
+  </div>
 </Layout>
 
 <style>
-main {
+.container {
   padding: 2rem;
   max-width: 800px;
+  cursor: default;
+  user-select: none;
   width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 600px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sentence-wrapper {
@@ -102,6 +134,53 @@ cite {
   font-size: 1rem;
   color: var(--meta-color);
   margin-bottom: 1.5rem;
+}
+
+.source a {
+  color: var(--meta-color);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.source a:hover {
+  color: var(--text-color);
+}
+
+/* External link indicator using CSS pseudo-element icon */
+.external-link::after {
+  content: " ↗"; 
+  font-size: 0.8em;
+  opacity: 0.7;
+  vertical-align: top;
+  margin-left: 2px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 2rem;
+}
+
+.footer-left {
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.9rem;
+  color: var(--meta-color);
+}
+
+footer:hover .footer-left {
+  opacity: 1;
+}
+
+.footer-left a {
+    color: var(--meta-color);
+    text-decoration: none;
+}
+
+.footer-left a:hover {
+    text-decoration: underline;
 }
 
 .more {

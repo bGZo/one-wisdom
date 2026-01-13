@@ -24,7 +24,7 @@
     
     <footer>
       <div class="footer-left">
-        <span>© 2026 bGZo · <a href="https://github.com/bGZo/one" target="_blank" @click.stop>One</a></span>
+        <span>© 2026 <a href="https://bgzo.cc" target="_blank">bGZo</a> · <a href="https://github.com/bGZo/one-wisdom" target="_blank">One Wisdom</a></span>
       </div>
       <div class="footer-right">
          <a class="more" href="#" @click.prevent.stop="shuffle">Next</a>
