@@ -9,6 +9,7 @@ export async function GET() {
       title: quote.data.title,
       author: quote.data.author,
       source: quote.data.source,
+      note: quote.data.note,
       path: `/${quote.slug}`
     }))
   );

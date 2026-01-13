@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="shuffle">
+  <div class="container">
     <div class="content">
       <main id="article" v-if="currentQuote">
         <div class="sentence-wrapper">
@@ -11,7 +11,12 @@
         </div>
         <cite>
           <div class="author">{{ currentQuote.author }}</div>
-          <div class="source">{{ currentQuote.source }}</div>
+          <div class="source">
+            <a v-if="currentQuote.note" :href="currentQuote.note" target="_blank" class="external-link" @click.stop>
+              {{ currentQuote.source }}
+            </a>
+            <span v-else>{{ currentQuote.source }}</span>
+          </div>
         </cite>
       </main>
       <div v-else class="loading">Loading...</div>
@@ -19,7 +24,7 @@
     
     <footer>
       <div class="footer-left">
-        <span>Star me on <a href="https://github.com/bGZo/one-wisdom" target="_blank" @click.stop>Github</a></span>
+        <span>© 2026 bGZo · <a href="https://github.com/bGZo/one" target="_blank" @click.stop>One</a></span>
       </div>
       <div class="footer-right">
          <a class="more" href="#" @click.prevent.stop="shuffle">Next</a>
@@ -36,6 +41,7 @@ interface Quote {
   title: string;
   author?: string;
   source?: string;
+  note?: string;
   path: string;
 }
 
@@ -78,7 +84,7 @@ onMounted(() => {
 .container {
   padding: 2rem;
   max-width: 800px;
-  cursor: pointer;
+  cursor: default;
   user-select: none;
   width: 100%;
   
@@ -154,6 +160,26 @@ cite {
   font-size: 1rem;
   color: var(--meta-color);
   margin-bottom: 1.5rem;
+}
+
+.source a {
+  color: var(--meta-color);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.source a:hover {
+  color: var(--text-color);
+}
+
+/* External link indicator using CSS pseudo-element icon */
+.external-link::after {
+  content: " ↗"; 
+  font-size: 0.8em;
+  opacity: 0.7;
+  vertical-align: top;
+  margin-left: 2px;
 }
 
 footer {
