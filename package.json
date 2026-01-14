@@ -10,11 +10,12 @@
     "sync": "node scripts/sync.js"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.1.4",
     "@astrojs/vue": "^4.0.8",
     "astro": "^4.2.1",
-    "vue": "^3.4.15",
-    "gray-matter": "^4.0.3",
     "fs-extra": "^11.2.0",
-    "glob": "^10.3.10"
+    "glob": "^10.3.10",
+    "gray-matter": "^4.0.3",
+    "vue": "^3.4.15"
   }
 }
