@@ -37,7 +37,7 @@ jobs:
       - name: Push Readme
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            git config user.name "Github Actions"
+            git config user.name "GitHub Actions"
             git config user.email "im@bgzo.cc"
             git add .
             git commit -m "docs(bot): sync issue by github action."
